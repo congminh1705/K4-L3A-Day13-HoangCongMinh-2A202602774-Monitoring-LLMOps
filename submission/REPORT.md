@@ -5,12 +5,12 @@
 ## 1. Thông tin học viên
 
 - **Họ và tên:**
-- **MSSV:**
+- **MSSV:** 2A202602774
 - **Lớp:** K4-L3A
 - **Repository URL:**
 - **Commit SHA cuối:**
 - **Challenge ID:**
-- **Tên project Langfuse cá nhân:** `day13-k4-l3a-<MSSV>`
+- **Tên project Langfuse cá nhân:** `day13-k4-l3a-2A202602774`
 
 ## 2. Evidence index
 
@@ -37,13 +37,20 @@
 
 | Nội dung | Baseline | Kết quả cuối | Nhận xét |
 |---|---|---|---|
-| `validate_logs.py` | | | |
-| `validate_dashboard.py` | | | |
-| `pytest` | | | |
-| Số traces hợp lệ | | | |
+| `validate_logs.py` | 30/100 (44 records, 40 thiếu trường/context, 0 correlation ID, 0 PII leak) | | Baseline starter trước CP1; chưa đạt 80/100. |
+| `validate_dashboard.py` | 6/6 panel hợp lệ | | Kiểm tra contract, chưa xác nhận dashboard runtime. |
+| `pytest` | 22 passed | | Chạy với `-p no:cacheprovider --basetemp=D:\Day13-Lab\cp0-pytest-tmp` vì thư mục tạm mặc định bị từ chối quyền truy cập. |
+| Số traces hợp lệ | 1 observation `lab-agent-run` trên Langfuse | | Xác nhận qua observations API v2 sau load test; CP2 cần thêm traces và child observations. |
 | Số PII leak | | | |
 | Latency P95 / TTFT P95 | | | |
 | Retrieval success rate | | | |
+
+### CP0 — Setup và baseline
+
+- `/health` trả `ok: true`, `tracing_enabled: true`.
+- `python scripts/load_test.py`: 10/10 request nhận HTTP 200; `data/logs.jsonl` tăng từ 24 lên 44 records.
+- Langfuse API xác nhận project `day13-k4-l3a-2A202602774` và observation `lab-agent-run` tại `2026-09-29T07:52:59.702Z`, trace ID `8619664a717383a7701ed7b1a74b4691`.
+- `validate_logs.py` báo 30/100 là baseline dự kiến của starter; correlation ID và log enrichment thuộc CP1.
 
 ## 4. Logging và PII
 
