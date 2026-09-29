@@ -1,0 +1,7 @@
+Langfuse trace evidence (project: day13-k4-l3a-2A202602774)
+correlation_id: req-00b906f4
+trace_id: 0ae007add84a88ef92662fa2e6df6a7d
+root lab-agent-run: 2.654 s
+child knowledge-retrieval: 2.501 s
+child fake-llm-generation: 0.151 s
+The retrieval span accounts for the injected delay; generation is comparatively short. No credentials or raw prompt content included.

@@ -32,3 +32,5 @@ Từ `submission/REPORT.md`, dẫn ảnh bằng đường dẫn tương đối:
 ```
 
 Không commit secret, API key, PII thô hoặc evidence của học viên/lớp khác.
+
+CP3 text evidence files 12-15 are sanitized extracts/summaries; they omit raw challenge inputs and secrets.

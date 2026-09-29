@@ -29,9 +29,10 @@
 | Prompt versions | `evidence/09-prompt-versions.txt` |
 | Prompt rollback | `evidence/10-prompt-rollback.txt` |
 | Dashboard runtime | `evidence/11-dashboard-overview.html` |
-| Incident metric | `evidence/12-incident-metric.png` |
-| Incident log | `evidence/13-incident-log.png` |
-| Incident trace | `evidence/14-incident-trace.png` |
+| Incident metric | `evidence/12-incident-metric.txt` |
+| Incident log | `evidence/13-incident-log.txt` |
+| Incident trace | `evidence/14-incident-trace.txt` |
+| Post-mitigation check | `evidence/15-after-fix.txt` |
 
 ## 3. Kết quả kỹ thuật
 
@@ -77,16 +78,16 @@
 - **Cách tính error budget:** `100% - 99.5% = 0.5%`; tương đương khoảng 3 giờ 21 phút trong 28 ngày.
 - **Ba alert và runbook tương ứng:** error rate >2% trong 5 phút; latency P95 >3 giây trong 10 phút; retrieval success <90% trong 5 phút. Cả ba gửi `#day13-alerts`; runbook ở `docs/alerts.md`.
 
-## 7. Điều tra challenge
+## 7. Challenge investigation
 
-- **Challenge ID:**
-- **Khoảng thời gian điều tra:**
-- **Triệu chứng từ metrics:**
-- **Log line và correlation ID liên quan:**
-- **Trace ID và span gây ảnh hưởng:**
-- **Root cause:**
-- **Fix action:**
-- **Preventive measure:**
+- **Challenge ID:** `day13-k4-l3a-monitoring-llmops-v1` (cohort K4), scenario `rag_slow`.
+- **Investigation window:** 2026-09-29 09:40:14-09:40:27 UTC; see `evidence/12-incident-metric.txt`.
+- **Metrics symptom:** All 5 requests returned HTTP 200, but structured-log response latency exceeded the 2,000 ms challenge threshold: 2,652-2,654 ms, median 2,653 ms, nearest-rank P95 2,654 ms. No request/tool failures; `tool_success=true`. Aggregate `/metrics` is not treated as challenge-only data.
+- **Related log and correlation ID:** `req-00b906f4`, feature `monitoring`, response latency 2,654 ms, successful retrieval; sanitized extract in `evidence/13-incident-log.txt`.
+- **Trace ID and affected span:** `0ae007add84a88ef92662fa2e6df6a7d`; root `lab-agent-run` 2.654 s, child `knowledge-retrieval` 2.501 s, child `fake-llm-generation` 0.151 s. See `evidence/14-incident-trace.txt`.
+- **Root cause:** The injected `rag_slow` incident makes retrieval wait 2.5 seconds (`app/mock_rag.py`); generation took only 0.151 seconds.
+- **Fix action:** Disabled the incident injection after capturing evidence. Post-mitigation verification returned HTTP 200 in 151 ms (`req-c0ffee01`); see `evidence/15-after-fix.txt`.
+- **Preventive measure:** Track retrieval P95 separately from request latency; add retrieval timeout/fallback or caching, and a latency-budget regression check.
 
 ## 8. Giải thích và tự đánh giá
 
