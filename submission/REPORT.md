@@ -16,22 +16,22 @@
 
 Điền đúng đường dẫn tới evidence thực tế. Có thể đổi tên hoặc dùng nhiều ảnh nếu cần.
 
-| Evidence | Đường dẫn |
-|---|---|
-| Final pytest | `evidence/01-pytest.png` |
-| Log validator | `evidence/02-log-validator.png` |
-| Dashboard validator | `evidence/03-dashboard-validator.png` |
-| Structured log | `evidence/04-structured-log.png` |
-| PII redaction | `evidence/05-pii-redaction.png` |
-| Trace list | `evidence/06-trace-list.png` |
-| Trace waterfall | `evidence/07-trace-waterfall.png` |
-| Trace metadata | `evidence/08-trace-metadata.png` |
-| Prompt versions | `evidence/09-prompt-versions.png` |
-| Prompt rollback | `evidence/10-prompt-rollback.png` |
-| Dashboard runtime | `evidence/11-dashboard-overview.png` |
-| Incident metric | `evidence/12-incident-metric.png` (dashboard snapshot; source details in `evidence/README.md`) |
-| Incident log | `evidence/13-incident-log.png` (`data/logs.jsonl`; source details in `evidence/README.md`) |
-| Incident trace | `evidence/14-incident-trace.txt` (verified Langfuse observation extract; PNG not captured) |
+| Evidence | Tệp ảnh/bằng chứng | Nguồn cụ thể |
+|---|---|---|
+| Final pytest | `evidence/01-pytest.png` | [Lệnh, thư mục chạy và kết quả](evidence/README.md#L7) |
+| Log validator | `evidence/02-log-validator.png` | [Lệnh và số liệu đúng tại thời điểm chụp](evidence/README.md#L8) |
+| Dashboard validator | `evidence/03-dashboard-validator.png` | [Lệnh và output](evidence/README.md#L9) |
+| Structured log | `evidence/04-structured-log.png` | [`data/logs.jsonl`, dòng 8](evidence/README.md#L10) |
+| PII redaction | `evidence/05-pii-redaction.png` | [Script demo và dữ liệu synthetic](evidence/README.md#L11) |
+| Trace list | `evidence/06-trace-list.png` | [Project ID, khoảng thời gian và bộ lọc Langfuse](evidence/README.md#L12) |
+| Trace waterfall | `evidence/07-trace-waterfall.png` | [Trace ID và các observation](evidence/README.md#L13) |
+| Trace metadata | `evidence/08-trace-metadata.png` | [Trace ID, observation và correlation ID](evidence/README.md#L14) |
+| Prompt versions | `evidence/09-prompt-versions.png` | [Prompt và thời điểm tạo versions](evidence/README.md#L15) |
+| Prompt rollback | `evidence/10-prompt-rollback.png` | [Prompt, version đang chọn và Linked Generations](evidence/README.md#L16) |
+| Dashboard runtime | `evidence/11-dashboard-overview.png` | [Lệnh tạo, log nguồn và thời điểm snapshot](evidence/README.md#L17) |
+| Incident metric | `evidence/12-incident-metric.png` | [Lệnh tạo, log nguồn và chỉ số trong ảnh](evidence/README.md#L18) |
+| Incident log | `evidence/13-incident-log.png` | [`data/logs.jsonl`, dòng 193](evidence/README.md#L19) |
+| Incident trace | `evidence/14-incident-trace.txt` | [Trace ID gốc và correlation ID; chưa có ảnh PNG](evidence/README.md#L21) |
 
 ## 3. Kết quả kỹ thuật
 
