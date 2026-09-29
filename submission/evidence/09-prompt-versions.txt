@@ -1,0 +1,11 @@
+CP2 Langfuse prompt versions — project day13-k4-l3a-2A202602774
+
+Prompt name: day13-chat
+Version 1 labels: baseline, production (restored after rollback)
+Version 2 labels: candidate
+
+Shared test input: What is the refund policy?
+Baseline trace: 746229ae05246731ab5f589b88a71846 (correlation req-20de1713)
+Candidate trace: 7b2733cce47dbce9d3b0094e13bf883 (correlation req-e9c427d1)
+
+Both prompts retain Feature={{feature}}, Docs={{docs}}, and Question={{message}}.

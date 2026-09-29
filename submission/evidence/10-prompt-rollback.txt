@@ -1,0 +1,7 @@
+CP2 production label rollback — Langfuse project day13-k4-l3a-2A202602774
+
+Initial production version: 1
+Temporarily promoted production to version: 2
+Rolled production back to version: 1
+Read-back after rollback: production resolves to version 1
+Current labels: baseline=1, candidate=2, production=1

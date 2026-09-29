@@ -29,6 +29,14 @@ Giữ time range mặc định 60 phút, refresh 30 giây và hiển thị thres
 python scripts/validate_dashboard.py
 ```
 
+Để xem nhanh dashboard sáu panel ngay từ log local, tạo snapshot HTML:
+
+```bash
+python scripts/build_dashboard.py
+```
+
+Mở `submission/evidence/11-dashboard-overview.html` trong trình duyệt. Snapshot dùng cửa sổ 60 phút và hiển thị đơn vị cùng threshold theo YAML; chạy lại lệnh sau workload mới để cập nhật số liệu.
+
 Validator kiểm tra cấu trúc contract; nó không thể chứng minh biểu đồ trong ảnh dùng đúng dữ liệu. Evidence runtime vẫn bắt buộc.
 
 ## Cách kiểm tra runtime

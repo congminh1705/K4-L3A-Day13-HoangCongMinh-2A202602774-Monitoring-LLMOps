@@ -1,0 +1,20 @@
+CP2 Langfuse trace list — project day13-k4-l3a-2A202602774
+Created 2026-09-29; 12 traces with root, retrieval, and generation observations.
+
+Baseline shared input, correlation req-20de1713:
+746229ae05246731ab5f589b88a71846
+
+Candidate shared input, correlation req-e9c427d1:
+7b2733cce47dbce9d3b0094e13bf883
+
+Additional CP2 workload traces:
+req-94c4bdf2  50612592e6e7f0e26efe4c648870e8b4
+req-ed954b40  9c62294a05069b2eb6ff1d9b34713f5f
+req-5943012c  ddfcb843b4af0ab89945d55e8c74862c
+req-a9f0e6f7  ba37b7b8e158c493f5cebbc885bd977
+req-84bdccb9  79af5a3a380019cab097629e9867fdcf
+req-d361aec0  c07d1d7382573d4eee7fd4fee23805d5
+req-945cdf1f  3236e7c329b3e29be0978294e13bf883
+req-f4a1121f  27510434a1fb73890bf4bf983cad9908
+req-c8bd4344  ffdabaecd740b20f765277ae2108e7f9
+req-7806d1d0  7b35072c3ef4cb892e4c8374cc451ba8

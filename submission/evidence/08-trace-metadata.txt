@@ -1,0 +1,13 @@
+CP2 trace metadata verification — 2026-09-29
+
+Baseline trace: 746229ae05246731ab5f589b88a71846
+correlation_id=req-20de1713; feature=qa; model=claude-sonnet-4-5
+prompt_name=day13-chat; prompt_label=baseline; prompt_version=1; prompt_source=langfuse
+
+Candidate trace: 7b2733cce47dbce9d3b0094e13bf883
+correlation_id=req-e9c427d1; feature=qa; model=claude-sonnet-4-5
+prompt_name=day13-chat; prompt_label=candidate; prompt_version=2; prompt_source=langfuse
+
+Both traces used the same input: "What is the refund policy?"
+Generation observations contain model, token usage, cost, prompt link, and TTFT metadata.
+No raw user input or output was added to observation payloads.

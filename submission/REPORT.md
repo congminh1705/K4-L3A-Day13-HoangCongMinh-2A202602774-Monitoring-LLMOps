@@ -18,17 +18,17 @@
 
 | Evidence | Đường dẫn |
 |---|---|
-| Pytest cuối | `evidence/01-pytest.png` |
+| Pytest cuối | `evidence/01-pytest.txt` |
 | Log validator | `evidence/02-log-validator.txt` |
-| Dashboard validator | `evidence/03-dashboard-validator.png` |
+| Dashboard validator | `evidence/03-dashboard-validator.txt` |
 | Structured log | `evidence/04-structured-log.txt` |
 | PII redaction | `evidence/05-pii-redaction.txt` |
-| Trace list | `evidence/06-trace-list.png` |
-| Trace waterfall | `evidence/07-trace-waterfall.png` |
-| Trace metadata | `evidence/08-trace-metadata.png` |
-| Prompt versions | `evidence/09-prompt-versions.png` |
-| Prompt rollback | `evidence/10-prompt-rollback.png` |
-| Dashboard runtime | `evidence/11-dashboard-overview.png` |
+| Trace list | `evidence/06-trace-list.txt` |
+| Trace waterfall | `evidence/07-trace-waterfall.txt` |
+| Trace metadata | `evidence/08-trace-metadata.txt` |
+| Prompt versions | `evidence/09-prompt-versions.txt` |
+| Prompt rollback | `evidence/10-prompt-rollback.txt` |
+| Dashboard runtime | `evidence/11-dashboard-overview.html` |
 | Incident metric | `evidence/12-incident-metric.png` |
 | Incident log | `evidence/13-incident-log.png` |
 | Incident trace | `evidence/14-incident-trace.png` |
@@ -37,13 +37,13 @@
 
 | Nội dung | Baseline | Kết quả cuối | Nhận xét |
 |---|---|---|---|
-| `validate_logs.py` | 30/100 (44 records, 40 thiếu trường/context, 0 correlation ID, 0 PII leak) | 100/100 (20 records, 10 correlation IDs, 0 PII leak) | Đạt CP1. |
-| `validate_dashboard.py` | 6/6 panel hợp lệ | | Kiểm tra contract, chưa xác nhận dashboard runtime. |
-| `pytest` | 22 passed | 25 passed | Dùng `-p no:cacheprovider` và `--basetemp` trong workspace vì thư mục tạm mặc định bị từ chối quyền truy cập. |
-| Số traces hợp lệ | 1 observation `lab-agent-run` trên Langfuse | | Xác nhận qua observations API v2 sau load test; CP2 cần thêm traces và child observations. |
-| Số PII leak | | | |
-| Latency P95 / TTFT P95 | | | |
-| Retrieval success rate | | | |
+| `validate_logs.py` | 30/100 | 100/100 (29 records, 10 correlation IDs, 0 PII leak) | CP1 đạt. |
+| `validate_dashboard.py` | 6/6 panel hợp lệ | 6/6 panel hợp lệ | Có snapshot HTML từ log thực tế. |
+| `pytest` | 22 passed | 26 passed | Dùng `-p no:cacheprovider` và `--basetemp` trong workspace vì thư mục tạm mặc định bị từ chối quyền truy cập. |
+| Số traces hợp lệ | 1 root observation | 12 root + 24 child observations | Có retrieval và generation cho cả 12 traces. |
+| Số PII leak | 0 | 0 | Log validator không phát hiện PII. |
+| Latency P95 / TTFT P95 | | 1,168 ms / 50 ms | Từ 10 response gần nhất trong structured log. |
+| Retrieval success rate | | 100% | Từ tool success records trong structured log. |
 
 ### CP0 — Setup và baseline
 
@@ -61,21 +61,21 @@
 
 ## 5. Tracing và prompt versioning
 
-- **Cách xác nhận traces do chính tôi tạo trong project cá nhân:**
-- **Cấu trúc root/retrieval/generation observations:**
-- **Cách nối trace với log:**
-- **Prompt name:**
-- **Version/label baseline:**
-- **Version/label candidate:**
-- **Trace ID của mỗi version:**
-- **Cách promote và rollback `production`:**
+- **Cách xác nhận traces do chính tôi tạo trong project cá nhân:** Langfuse API xác nhận project `day13-k4-l3a-2A202602774`; CP2 workload tạo 12 trace mới.
+- **Cấu trúc root/retrieval/generation observations:** Mỗi trace có root `lab-agent-run`, child `knowledge-retrieval` loại retriever và `fake-llm-generation` loại generation. Generation chứa model, prompt link, usage và cost.
+- **Cách nối trace với log:** Dùng correlation ID; hai trace so sánh prompt lần lượt `req-20de1713` và `req-e9c427d1`.
+- **Prompt name:** `day13-chat`.
+- **Version/label baseline:** v1 / `baseline`.
+- **Version/label candidate:** v2 / `candidate`.
+- **Trace ID của mỗi version:** baseline `746229ae05246731ab5f589b88a71846`; candidate `7b2733cce47dbce9d3b0094e13bf883`.
+- **Cách promote và rollback `production`:** Đã chuyển tạm `production` sang v2, sau đó rollback về v1; đọc lại API xác nhận `production=1`.
 
 ## 6. Dashboard, SLO và alerts
 
-- **Dashboard và sáu panel:**
-- **SLO và lý do chọn:**
-- **Cách tính error budget:**
-- **Ba alert và runbook tương ứng:**
+- **Dashboard và sáu panel:** Snapshot HTML từ `data/logs.jsonl` theo dashboard contract: latency/TTFT, traffic, errors/retrieval success, cost, tokens và quality.
+- **SLO và lý do chọn:** 99.5% request thành công trong ≤3 giây trên cửa sổ 28 ngày; error budget 0.5%. Chọn 3 giây theo threshold P95 của dashboard.
+- **Cách tính error budget:** `100% - 99.5% = 0.5%`; tương đương khoảng 3 giờ 21 phút trong 28 ngày.
+- **Ba alert và runbook tương ứng:** error rate >2% trong 5 phút; latency P95 >3 giây trong 10 phút; retrieval success <90% trong 5 phút. Cả ba gửi `#day13-alerts`; runbook ở `docs/alerts.md`.
 
 ## 7. Điều tra challenge
 

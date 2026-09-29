@@ -38,3 +38,5 @@ Không chấm prompt nào “hay hơn”. Điểm nằm ở khả năng truy xu�
 - Hai trace ID chứng minh hai version/label khác nhau.
 - Một ảnh trước/sau khi đổi label hoặc rollback `production`.
 - Ghi các ID và đường dẫn ảnh vào `submission/REPORT.md`.
+
+Trong repository cá nhân này, có thể chạy `python scripts/run_cp2_workload.py` để tạo thiếu version 1/2 trong project từ `.env`, chạy cùng input với `baseline`/`candidate`, tạo thêm 10 traces, rồi promote và rollback `production` về version 1. Script in correlation ID để đối chiếu trace; không ghi API key ra output.
