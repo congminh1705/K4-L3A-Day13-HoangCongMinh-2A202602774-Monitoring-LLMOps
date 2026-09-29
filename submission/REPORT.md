@@ -100,7 +100,7 @@
 ## 9. Checklist trước khi nộp
 
 - [x] Kết quả và evidence thuộc commit SHA cuối.
-- [x] Tất cả ảnh/output mở được bằng đường dẫn tương đối.
+- [x] `submission/REPORT.md` đã đủ; mọi ảnh dùng đường dẫn tương đối và mở được.
 - [x] Incident evidence nối đúng metric → log → trace.
 - [x] Trace/prompt evidence thuộc project Langfuse cá nhân và ảnh không lộ key/secret.
 - [x] Repository chạy lại được theo README.
