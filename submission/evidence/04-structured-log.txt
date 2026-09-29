@@ -1,0 +1,13 @@
+CP1 structured log sample — 2026-09-29
+
+event=request_received
+correlation_id=req-77dd5020
+user_id_hash=2055254ee30a
+session_id=s01
+feature=qa
+model=claude-sonnet-4-5
+env=dev
+level=info
+
+The matching response_sent record contains latency_ms, ttft_ms, tokens_in,
+tokens_out, cost_usd, quality_score, tool_name and tool_success.

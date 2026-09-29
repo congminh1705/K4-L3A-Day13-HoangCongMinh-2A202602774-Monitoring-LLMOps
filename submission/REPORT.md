@@ -19,10 +19,10 @@
 | Evidence | Đường dẫn |
 |---|---|
 | Pytest cuối | `evidence/01-pytest.png` |
-| Log validator | `evidence/02-log-validator.png` |
+| Log validator | `evidence/02-log-validator.txt` |
 | Dashboard validator | `evidence/03-dashboard-validator.png` |
-| Structured log | `evidence/04-structured-log.png` |
-| PII redaction | `evidence/05-pii-redaction.png` |
+| Structured log | `evidence/04-structured-log.txt` |
+| PII redaction | `evidence/05-pii-redaction.txt` |
 | Trace list | `evidence/06-trace-list.png` |
 | Trace waterfall | `evidence/07-trace-waterfall.png` |
 | Trace metadata | `evidence/08-trace-metadata.png` |
@@ -37,9 +37,9 @@
 
 | Nội dung | Baseline | Kết quả cuối | Nhận xét |
 |---|---|---|---|
-| `validate_logs.py` | 30/100 (44 records, 40 thiếu trường/context, 0 correlation ID, 0 PII leak) | | Baseline starter trước CP1; chưa đạt 80/100. |
+| `validate_logs.py` | 30/100 (44 records, 40 thiếu trường/context, 0 correlation ID, 0 PII leak) | 100/100 (20 records, 10 correlation IDs, 0 PII leak) | Đạt CP1. |
 | `validate_dashboard.py` | 6/6 panel hợp lệ | | Kiểm tra contract, chưa xác nhận dashboard runtime. |
-| `pytest` | 22 passed | | Chạy với `-p no:cacheprovider --basetemp=D:\Day13-Lab\cp0-pytest-tmp` vì thư mục tạm mặc định bị từ chối quyền truy cập. |
+| `pytest` | 22 passed | 25 passed | Dùng `-p no:cacheprovider` và `--basetemp` trong workspace vì thư mục tạm mặc định bị từ chối quyền truy cập. |
 | Số traces hợp lệ | 1 observation `lab-agent-run` trên Langfuse | | Xác nhận qua observations API v2 sau load test; CP2 cần thêm traces và child observations. |
 | Số PII leak | | | |
 | Latency P95 / TTFT P95 | | | |
@@ -54,10 +54,10 @@
 
 ## 4. Logging và PII
 
-- **Cách tạo/nhận và truyền correlation ID:**
-- **Các metadata được ghi vào structured log:**
-- **Cách bảo đảm PII được scrub trước khi ghi:**
-- **Cách kiểm chứng kết quả:**
+- **Cách tạo/nhận và truyền correlation ID:** Middleware xóa context cũ ở đầu request, nhận `x-request-id` hợp lệ hoặc sinh `req-<8-hex>`, bind vào structlog, truyền vào agent và trả lại qua response header.
+- **Các metadata được ghi vào structured log:** `user_id_hash`, `session_id`, `feature`, `model`, `env`, cùng timestamp, level, event và `correlation_id`.
+- **Cách bảo đảm PII được scrub trước khi ghi:** Processor `scrub_event` duyệt đệ quy các giá trị string và chạy trước `JsonlFileProcessor`/`JSONRenderer`; hỗ trợ email, điện thoại Việt Nam, CCCD và thẻ thanh toán.
+- **Cách kiểm chứng kết quả:** 25 tests pass; load test 10/10 HTTP 200; log validator 100/100 và không phát hiện PII mẫu. Xem `evidence/02-log-validator.txt`, `evidence/04-structured-log.txt`, `evidence/05-pii-redaction.txt`.
 
 ## 5. Tracing và prompt versioning
 
