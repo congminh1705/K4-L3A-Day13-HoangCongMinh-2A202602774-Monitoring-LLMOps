@@ -1,3 +1,0 @@
-Post-mitigation verification
-Incident injection rag_slow: OFF
-correlation_id=req-c0ffee01 | feature=monitoring | HTTP 200 | latency_ms=151

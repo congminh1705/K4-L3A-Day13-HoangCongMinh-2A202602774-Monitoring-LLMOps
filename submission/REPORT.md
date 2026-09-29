@@ -29,10 +29,9 @@
 | Prompt versions | `evidence/09-prompt-versions.png` |
 | Prompt rollback | `evidence/10-prompt-rollback.png` |
 | Dashboard runtime | `evidence/11-dashboard-overview.png` |
-| Incident metric | `evidence/12-incident-metric.txt` (original run); dashboard screenshot `evidence/12-incident-metric.png` |
-| Incident log | `evidence/13-incident-log.txt` (original run); screenshot `evidence/13-incident-log.png` |
-| Incident trace | `evidence/14-incident-trace.txt` (verified Langfuse observation extract) |
-| Post-mitigation check | `evidence/15-after-fix.txt` |
+| Incident metric | `evidence/12-incident-metric.png` (dashboard snapshot; source details in `evidence/README.md`) |
+| Incident log | `evidence/13-incident-log.png` (`data/logs.jsonl`; source details in `evidence/README.md`) |
+| Incident trace | `evidence/14-incident-trace.txt` (verified Langfuse observation extract; PNG not captured) |
 
 ## 3. Kết quả kỹ thuật
 
@@ -81,12 +80,12 @@
 ## 7. Challenge investigation
 
 - **Challenge ID:** `day13-k4-l3a-monitoring-llmops-v1` (cohort K4), scenario `rag_slow`.
-- **Original investigation window:** 2026-09-29 09:40:14-09:40:27 UTC. All five challenge requests returned HTTP 200; structured response latency was 2,652-2,654 ms, median 2,653 ms, nearest-rank P95 2,654 ms. All 5/5 exceeded the 2,000 ms challenge threshold; there were no request/tool failures and retrieval succeeded 5/5. See `evidence/12-incident-metric.txt`.
-- **Related log/correlation ID:** `req-00b906f4`, `response_sent`, feature `monitoring`, latency 2,653 ms, `tool_success=true`. Sanitized extract: `evidence/13-incident-log.txt`.
+- **Original investigation window:** 2026-09-29 09:40:14-09:40:27 UTC. All five challenge requests returned HTTP 200; structured response latency was 2,652-2,654 ms, median 2,653 ms, nearest-rank P95 2,654 ms. All 5/5 exceeded the 2,000 ms challenge threshold; there were no request/tool failures and retrieval succeeded 5/5. These original records are in `data/logs.jsonl` under the five challenge correlation IDs; the PNG dashboard is a later reproduction, documented in `evidence/README.md`.
+- **Related log/correlation ID:** `req-00b906f4`, `response_sent`, feature `monitoring`, latency 2,653 ms, `tool_success=true`; source record is in `data/logs.jsonl`.
 - **Trace/span:** trace `0ae007add84a88ef92662fa2e6df6a7d`, correlation ID `req-00b906f4`; root `lab-agent-run` 2.654 s, child `knowledge-retrieval` 2.501 s, child `fake-llm-generation` 0.151 s. Verified from the personal Langfuse project and recorded in `evidence/14-incident-trace.txt`.
-- **Re-run screenshots:** `12-incident-metric.png` and `13-incident-log.png` show a later reproduction on 2026-09-29 13:36-13:38 UTC. The original metric/log/trace extracts above form the joined investigation chain.
+- **Re-run screenshots:** `12-incident-metric.png` and `13-incident-log.png` show a later reproduction on 2026-09-29 13:36-13:38 UTC. The original metric is calculated from the five matching records in `data/logs.jsonl`; its log and trace are joined by `req-00b906f4` in `data/logs.jsonl` and `14-incident-trace.txt`.
 - **Root cause:** Injected `rag_slow` makes retrieval wait 2.5 seconds in `app/mock_rag.py`; generation takes about 0.151 seconds.
-- **Fix action:** Disabled the incident after evidence capture. Post-mitigation verification returned HTTP 200 in 151 ms (`req-c0ffee01`); see `evidence/15-after-fix.txt`.
+- **Fix action:** Disabled the incident after evidence capture. Post-mitigation verification returned HTTP 200 in 151 ms (`req-c0ffee01`); source record is in `data/logs.jsonl`.
 - **Preventive measure:** Track retrieval P95 separately from request latency; add retrieval timeout/fallback or caching and a latency-budget regression check.
 
 ## 8. Reflection
@@ -106,4 +105,4 @@
 - [x] Trace/prompt evidence thuộc project Langfuse cá nhân và ảnh không lộ key/secret.
 - [x] Repository chạy lại được theo README.
 - [x] Không có secret, API key, PII thô hoặc evidence của người khác/lớp khác.
-- [ ] URL repo và commit SHA cuối đã được nộp trên LMS/Codelabs.
+- [x] URL repo và commit SHA cuối đã được nộp trên LMS/Codelabs.

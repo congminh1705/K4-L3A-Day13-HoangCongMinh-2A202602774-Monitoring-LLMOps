@@ -1,9 +1,0 @@
-CP3 challenge metric summary (sanitized; original investigation run)
-Challenge: day13-k4-l3a-monitoring-llmops-v1 | Cohort: K4 | Scenario: rag_slow
-Window: 2026-09-29 09:40:14-09:40:27 UTC
-Challenge threshold: 2000 ms
-Requests: 5; HTTP 200: 5; response latency above threshold: 5/5
-Structured response latency_ms: 2654, 2653, 2653, 2652, 2653
-Min/max: 2652/2654 ms | Median: 2653 ms | Nearest-rank P95: 2654 ms
-Request/tool failures: 0 | Retrieval tool success: 5/5
-Latency values are response_sent structured-log latency_ms for the five original challenge correlation IDs. Aggregate process /metrics is not challenge-only data. Raw challenge prompts omitted.
