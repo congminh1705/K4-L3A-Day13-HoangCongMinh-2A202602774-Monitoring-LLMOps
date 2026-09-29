@@ -1,5 +1,0 @@
-CP2 dashboard contract validation — 2026-09-29
-
-HỢP LỆ: 6/6 panel có trong dashboard contract.
-
-Runtime snapshot: 11-dashboard-overview.html
